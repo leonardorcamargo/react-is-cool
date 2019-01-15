@@ -5,18 +5,18 @@ const {
 const {
     promisify
 } = require('util');
-const Presence = require('./Presence');
+const uuid = require('../utils/uuid');
 
 const readFileAsync = promisify(readFile);
 const writeFileAsync = promisify(writeFile);
 
-const FILE_NAME = './src/fakeData/presences.json';
+const FILE_NAME = './src/fakeApi/presences.json';
 
 const getFile = async function () {
     try {
         const dataJSON = await readFileAsync(`${FILE_NAME}`);
         const data = JSON.parse(dataJSON);
-        return data.presences.map(value => new Presence(value));
+        return data.presences;
     } catch (e) {
         return [];
     }
@@ -28,7 +28,7 @@ const setFile = async function (data) {
 
 const getDateBase = function (data) {
     if (data && data.length) {
-        const lastDate = data[data.length - 1].dateSaida;
+        const lastDate = new Date(data[data.length - 1].exitTime);
         if (!isNaN(lastDate))
             return lastDate;
     }
@@ -45,12 +45,12 @@ const generate = async function (amount = 1, presence = false) {
         const exitTime = new Date(date.setSeconds(date.getSeconds() + 1));
         date.setMinutes(date.getMinutes() + 1);
 
-        presences.push(new Presence({
-            _id: Date.now(),
+        presences.push({
+            _id: uuid(),
             presence,
             entryTime,
             exitTime,
-        }));
+        });
     }
 
     await setFile([

@@ -7,9 +7,9 @@ class Presence {
     }) {
         this._id = _id;
         this.presence = presence;
-        this.entryTime = entryTime;
-        this.exitTime = exitTime;
+        this.entryTime = new Date(entryTime);
+        this.exitTime = new Date(exitTime);
     }
 }
 
-module.exports = Presence;
+export default Presence;
