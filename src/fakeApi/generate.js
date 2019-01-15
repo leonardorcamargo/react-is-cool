@@ -62,18 +62,18 @@ const generate = async function (amount = 1, presence = false) {
 }
 
 const main = async function () {
-    await generate(50, false);
-    await generate(50, true);
-    await generate(50, false);
-    await generate(50, true);
-    await generate(50, false);
-    await generate(50, true);
-    await generate(50, false);
-    await generate(50, true);
-    await generate(50, false);
-    await generate(50, true);
-    await generate(50, false);
-    await generate(50, true);
+    await generate(5, false);
+    await generate(5, true);
+    await generate(5, false);
+    await generate(5, true);
+    await generate(5, false);
+    await generate(5, true);
+    await generate(5, false);
+    await generate(5, true);
+    await generate(5, false);
+    await generate(5, true);
+    await generate(5, false);
+    await generate(5, true);
 }
 
 main();

@@ -30,7 +30,6 @@ class App extends React.Component {
 
     render() {
         const presences = this.state.presencesFiltered;
-        console.log(presences.length)
         return (
             <div>
                 <Panel bsStyle="default">
