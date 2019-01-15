@@ -16,14 +16,14 @@ const getFile = async function () {
     try {
         const dataJSON = await readFileAsync(`${FILE_NAME}`);
         const data = JSON.parse(dataJSON);
-        return data.map(value => new Presence(value));
+        return data.presences.map(value => new Presence(value));
     } catch (e) {
         return [];
     }
 }
 
 const setFile = async function (data) {
-    await writeFileAsync(FILE_NAME, JSON.stringify(data));
+    await writeFileAsync(FILE_NAME, JSON.stringify({ presences: data }));
 }
 
 const getDateBase = function (data) {
