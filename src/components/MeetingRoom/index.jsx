@@ -24,9 +24,6 @@ class MeetingRoom extends React.Component {
 
     async componentDidMount() {
         await this.getPresences();
-        this.setState((state) => ({
-            presencesFiltered: state.presences,
-        }));
 
         setInterval(() => this.getPresences(), 15000);
     }
@@ -76,6 +73,7 @@ class MeetingRoom extends React.Component {
         this.setState({
             presences: result,
         });
+        this.filter();
     }  
     
     filter() {

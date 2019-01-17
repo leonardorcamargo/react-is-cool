@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Presence from '../model/Presence';
 
-const path = 'http://localhost:3001/presences';
+// const path = 'http://localhost:5000/presences';
+const path = 'https://salty-crag-27973.herokuapp.com/presences';
 
 const get = async () => {
     try {
