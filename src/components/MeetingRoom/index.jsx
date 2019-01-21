@@ -63,17 +63,15 @@ class MeetingRoom extends React.Component {
     }
 
     async getPresences() {
-        let result = [];
-        try {
-            result = await get();
+        try {            
+            const { result } = await get();
+            this.setState({
+                presences: result,
+            });
+            this.filter();
         } catch (e) {
             console.log(e);
         }
-
-        this.setState({
-            presences: result,
-        });
-        this.filter();
     }  
     
     filter() {
