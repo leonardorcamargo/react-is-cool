@@ -1,3 +1,30 @@
+# React is cool
+
+Este projeto foi criado com objetivo de fixar meus conhecimentos de React, para isso utilizei:
+- Bootstrap com React para criação de componentes bonitos
+- Axios para acessar uma API e consumir seus dados
+- Github pages para deploy da aplicação
+
+### A ideia
+
+O **react-is-cool** surgiu de um meetup organizado pelos grupos [Nerdzão](https://www.meetup.com/pt-BR/Nerdzao/) e [THT - Things Hacker Team](https://www.meetup.com/pt-BR/THT-Things-Hacker-Team/), onde passamos uma madrugada aprendendo diversas tecnologias e os participantes puderam escolher entre as trilhas de IoT, NodeJS, PowerBI e React.
+
+Na reta final do evento, cada um utilizou os conhecimentos adquiridos em sua trilha para criar um projeto bem legal que funcionasse de maneira integrada com o do coleguinha :)
+
+### Projeto React
+
+Depois do evento continuei mexendo no projeto até chegar a esse ponto, trata-se de uma tela que exibe uma lista de presença em uma sala de reuniões. Resumindo: mostra ao usuário em que momento a sala esteve livre ou ocupada.
+
+_"Feito é melhor que perfeito"_
+
+Embora não tenha uma estrutura bem definida, foi a maneira que encontrei para chegar aqui com os conhecimentos que tinha até o momento, feedbacks são muito bem vindos :), estou aberto a _PR's_ para melhorar este projeto.
+
+### Api
+
+Durante o meetup utilizei uma Api de um camarada que havia disponibilizado em sua máquina. Para continuar o desenvolvimento (e aprender mais sobre NodeJS XD) criei minha propria Api que gera dados simulados. Assim eu gero um fluxo constante de dados, que facilita bastante nos testes. Se tiver algum interesse está em [react-is-cool-api](https://github.com/leonardorcamargo/react-is-cool-api).
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
