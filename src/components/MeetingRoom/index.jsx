@@ -4,6 +4,7 @@ import { get } from '../../api/PresenceApi';
 import SelectFilter from '../SelectFilter';
 import CheckboxAgroup from '../CheckboxAgroup';
 import ListPresence from '../ListPresence';
+import Pagination from '../Pagination';
 
 class MeetingRoom extends React.Component {
     constructor(props) {
@@ -11,15 +12,18 @@ class MeetingRoom extends React.Component {
 
         this.state = {
             presences: [],
-            presencesFiltered: [],
+            page: 1,
+            pages: 0
         }
         this.filtered = 'all';
-        this.grouped = false;
+        this.agroup = false;
 
         this.onSelectFilter = this.onSelectFilter.bind(this);
+        this.onSelectPage = this.onSelectPage.bind(this);
         this.onAgroup = this.onAgroup.bind(this);
         this.getPresences = this.getPresences.bind(this);
-        this.filter = this.filter.bind(this);
+        this.nextPage = this.nextPage.bind(this);
+        this.previousPage = this.previousPage.bind(this);
     }
 
     async componentDidMount() {
@@ -29,7 +33,7 @@ class MeetingRoom extends React.Component {
     }
 
     render() {
-        const presencesFiltered = this.state.presencesFiltered;
+        const presences = this.state.presences;
         return (
             <Panel bsStyle="default">
                 <Panel.Heading>
@@ -46,7 +50,14 @@ class MeetingRoom extends React.Component {
                             </Col>
                         </FormGroup>
                     </Form>
-                    <ListPresence presences={presencesFiltered}/>
+                    <ListPresence presences={presences}/>
+                    <Pagination 
+                        page={this.state.page}
+                        pages={this.state.pages}
+                        onSelectPage={this.onSelectPage}
+                        onPrevious={this.previousPage}
+                        onNext={this.nextPage}
+                    />
                 </Panel.Body>
             </Panel>
         );
@@ -54,55 +65,45 @@ class MeetingRoom extends React.Component {
 
     onSelectFilter(event) {
         this.filtered = event.target.value
-        this.filter();
+        this.getPresences();
+    }
+
+    onSelectPage(event) {
+        this.getPresences({page: event.target.value});
     }
 
     onAgroup(event) {
-        this.agrouped = event.target.checked;
-        this.filter();
+        this.agroup = event.target.checked;
+        this.getPresences();
     }
 
-    async getPresences() {
+    async getPresences(params = {}) {
         try {            
-            const { result } = await get();
+            const query = {
+                page: params.page || this.state.page,
+                amount: 15,
+            };
+            if (this.filtered !== 'all') 
+                query.presence = this.filtered === 'busy';
+            if (this.agroup)
+                query.agroup = true;
+            const { result, page, pages } = await get(query);
             this.setState({
                 presences: result,
+                page,
+                pages
             });
-            this.filter();
         } catch (e) {
             console.log(e);
         }
-    }  
-    
-    filter() {
-        const presences = this.state.presences;
-        const agrouped = this.agrouped;
-        const filter = this.filtered;
+    }
 
-        let result = [];
-        if (agrouped) {
-            result = presences.reduce((acc, cur) => {
-                if (acc.length && acc[acc.length - 1].presence === cur.presence) {
-                    acc[acc.length -1].exitTime = cur.exitTime;
-                    return acc;
-                }
-                acc.push(cur);
-                return acc;
-            }, []);
-        } else {
-            result = presences;
-        }
+    nextPage() {
+        this.getPresences({page: this.state.page + 1})
+    }
 
-        if (filter === 'all') {
-            this.setState({
-                presencesFiltered: result
-            });
-            return;
-        }
-        result = result.filter(item => item.presence === (filter === 'busy'))
-        this.setState({
-            presencesFiltered: result
-        });
+    previousPage() {
+        this.getPresences({page: this.state.page - 1})
     }
 }
 

@@ -6,7 +6,9 @@ const get = async (query) => {
     try {
         const {
             data
-        } = await axios.get(`${path}/presences?${query}`);
+        } = await axios.get(`${path}/presences`, {
+            params: query
+        });
         return {
             ...data,
             result: data.result.map(item => new Presence(item))
@@ -16,15 +18,6 @@ const get = async (query) => {
     }
 }
 
-const post = async (presence) => {
-    try {
-        await axios.post(`${path}/presences`);
-    } catch (e) {
-        console.log('Erro ao postar presença: ', e);
-    }
-}
-
 export {
-    get,
-    post
+    get
 }
